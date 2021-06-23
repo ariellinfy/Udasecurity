@@ -1,4 +1,4 @@
-package com.udacity.catpoint.service;
+package com.udacity.catpoint.image;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
