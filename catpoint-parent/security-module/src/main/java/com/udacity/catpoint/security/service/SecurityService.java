@@ -1,4 +1,4 @@
-package com.udacity.catpoint.service;
+package com.udacity.catpoint.security.service;
 
 import com.udacity.catpoint.application.StatusListener;
 import com.udacity.catpoint.data.AlarmStatus;

@@ -1,4 +1,4 @@
-package com.udacity.catpoint.application;
+package com.udacity.catpoint.security.application;
 
 import com.udacity.catpoint.data.Sensor;
 import com.udacity.catpoint.data.SensorType;
