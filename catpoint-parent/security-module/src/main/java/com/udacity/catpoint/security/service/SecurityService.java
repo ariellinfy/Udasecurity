@@ -24,9 +24,9 @@ public class SecurityService {
     private SecurityRepository securityRepository;
     private Set<StatusListener> statusListeners = new HashSet<>();
 
-    public SecurityService(SecurityRepository securityRepository, FakeImageService imageService) {
+    public SecurityService(SecurityRepository securityRepository) {
         this.securityRepository = securityRepository;
-        this.imageService = imageService;
+        this.imageService = new FakeImageService();
     }
 
     /**
