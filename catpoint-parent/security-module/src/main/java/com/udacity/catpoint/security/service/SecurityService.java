@@ -1,5 +1,6 @@
 package com.udacity.catpoint.security.service;
 
+import com.udacity.catpoint.image.service.ImageService;
 import com.udacity.catpoint.security.application.StatusListener;
 import com.udacity.catpoint.security.data.AlarmStatus;
 import com.udacity.catpoint.security.data.ArmingStatus;
@@ -20,13 +21,13 @@ import java.util.Set;
  */
 public class SecurityService {
 
-    private FakeImageService imageService;
+    private ImageService imageService;
     private SecurityRepository securityRepository;
     private Set<StatusListener> statusListeners = new HashSet<>();
 
-    public SecurityService(SecurityRepository securityRepository) {
+    public SecurityService(SecurityRepository securityRepository, ImageService imageService) {
         this.securityRepository = securityRepository;
-        this.imageService = new FakeImageService();
+        this.imageService = imageService;
     }
 
     /**
@@ -106,6 +107,9 @@ public class SecurityService {
      * @param active
      */
     public void changeSensorActivationStatus(Sensor sensor, Boolean active) {
+        AlarmStatus alarmStatus = securityRepository.getAlarmStatus();
+        ArmingStatus armingStatus = securityRepository.getArmingStatus();
+
         if(!sensor.getActive() && active) {
             handleSensorActivated();
         } else if (sensor.getActive() && !active) {
