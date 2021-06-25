@@ -10,7 +10,6 @@ import com.udacity.catpoint.security.data.Sensor;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Service that receives information about changes to the security system. Responsible for
@@ -107,6 +106,8 @@ public class SecurityService {
             } else if (sensor.getActive() && !active) {
                 handleSensorDeactivated();
             }
+        } else if (getAlarmStatus() == AlarmStatus.ALARM && getArmingStatus() == ArmingStatus.DISARMED && !active) {
+            handleSensorDeactivated();
         }
         sensor.setActive(active);
         updateSensor(sensor);

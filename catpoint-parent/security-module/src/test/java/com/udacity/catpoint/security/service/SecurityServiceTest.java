@@ -1,6 +1,7 @@
 package com.udacity.catpoint.security.service;
 
 import com.udacity.catpoint.image.service.ImageService;
+import com.udacity.catpoint.security.application.StatusListener;
 import com.udacity.catpoint.security.data.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -171,5 +172,48 @@ public class SecurityServiceTest {
         securityService.processImage(mock(BufferedImage.class));
         securityService.setArmingStatus(ArmingStatus.ARMED_HOME);
         verify(securityRepository, times(1)).setAlarmStatus(AlarmStatus.ALARM);
+    }
+
+    /**
+     * Extra 1. Test StatusListener registration.
+     */
+    @Test
+    void testStatusLinstenerRegistration()
+    {
+        securityService.addStatusListener(mock(StatusListener.class));
+        securityService.removeStatusListener(mock(StatusListener.class));
+    }
+
+    /**
+     * Extra 2. If system is disarmed, a sensor activation do not affect alarm status.
+     */
+    @Test
+    void whenSystemDisarmedWithSensorActivation_alarmStatusDoNotChange()
+    {
+        when(securityRepository.getArmingStatus()).thenReturn(ArmingStatus.DISARMED);
+        securityService.changeSensorActivationStatus(sensor, true);
+        verify(securityRepository, never()).setAlarmStatus(any(AlarmStatus.class));
+    }
+
+    /**
+     * Extra 3. If system is disarmed and alarm is active, deactivate sensor will put the system into pending alarm status.
+     */
+    @Test
+    void whenSystemDisarmedAndActiveAlarmWithSensorDeactivation_alarmStatusSetToPending()
+    {
+        when(securityRepository.getArmingStatus()).thenReturn(ArmingStatus.DISARMED);
+        when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.ALARM);
+        sensor.setActive(true);
+        securityService.changeSensorActivationStatus(sensor, false);
+        verify(securityRepository, times(1)).setAlarmStatus(AlarmStatus.PENDING_ALARM);
+    }
+
+    /**
+     * Extra 4. Test sensor addition and removal
+     */
+    @Test
+    void testSensorAdditionAndRemoval() {
+        securityService.addSensor(sensor);
+        securityService.removeSensor(sensor);
     }
 }
