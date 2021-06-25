@@ -1,5 +1,6 @@
 package com.udacity.catpoint.security.application;
 
+import com.udacity.catpoint.security.data.AlarmStatus;
 import com.udacity.catpoint.security.data.Sensor;
 import com.udacity.catpoint.security.data.SensorType;
 import com.udacity.catpoint.security.service.SecurityService;
@@ -73,7 +74,7 @@ public class SensorPanel extends JPanel {
             JButton sensorToggleButton = new JButton((s.getActive() ? "Deactivate" : "Activate"));
             JButton sensorRemoveButton = new JButton("Remove Sensor");
 
-            sensorToggleButton.addActionListener(e -> setSensorActivity(s, !s.getActive()) );
+            sensorToggleButton.addActionListener(e -> setSensorActivity(s, !s.getActive()));
             sensorRemoveButton.addActionListener(e -> removeSensor(s));
 
             //hard code some sizes, tsk tsk

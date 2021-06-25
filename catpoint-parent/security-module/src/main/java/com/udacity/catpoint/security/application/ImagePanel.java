@@ -46,7 +46,7 @@ public class ImagePanel extends JPanel implements StatusListener {
             chooser.setCurrentDirectory(new File("."));
             chooser.setDialogTitle("Select Picture");
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            if(chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
                 return;
             }
             try {
@@ -78,7 +78,7 @@ public class ImagePanel extends JPanel implements StatusListener {
 
     @Override
     public void catDetected(boolean catDetected) {
-        if(catDetected) {
+        if (catDetected) {
             cameraHeader.setText("DANGER - CAT DETECTED");
         } else {
             cameraHeader.setText("Camera Feed - No Cats Detected");

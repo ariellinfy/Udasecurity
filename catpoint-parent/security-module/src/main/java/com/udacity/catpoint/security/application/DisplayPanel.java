@@ -36,19 +36,19 @@ public class DisplayPanel extends JPanel implements StatusListener {
     }
 
     @Override
-    public void notify(AlarmStatus status) {
+    public void notify (AlarmStatus status) {
         currentStatusLabel.setText(status.getDescription());
         currentStatusLabel.setBackground(status.getColor());
         currentStatusLabel.setOpaque(true);
     }
 
     @Override
-    public void catDetected(boolean catDetected) {
+    public void catDetected (boolean catDetected) {
         // no behavior necessary
     }
 
     @Override
-    public void sensorStatusChanged() {
+    public void sensorStatusChanged () {
         // no behavior necessary
     }
 }
