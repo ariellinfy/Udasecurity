@@ -13,7 +13,7 @@ import javax.swing.*;
  * Panel that allows users to add sensors to their system. Sensors may be
  * manually set to "active" and "inactive" to test the system.
  */
-public class SensorPanel extends JPanel {
+public class SensorPanel extends JPanel implements StatusListener {
 
     private SecurityService securityService;
 
@@ -27,10 +27,11 @@ public class SensorPanel extends JPanel {
     private JPanel sensorListPanel;
     private JPanel newSensorPanel;
 
-    public SensorPanel(SecurityService securityService) {
+    public SensorPanel (SecurityService securityService) {
         super();
         setLayout(new MigLayout());
         this.securityService = securityService;
+        securityService.addStatusListener(this);
 
         panelLabel.setFont(StyleService.HEADING_FONT);
         addNewSensorButton.addActionListener(e ->
@@ -51,7 +52,7 @@ public class SensorPanel extends JPanel {
     /**
      * Builds the panel with the form for adding a new sensor
      */
-    private JPanel buildAddSensorPanel() {
+    private JPanel buildAddSensorPanel () {
         JPanel p = new JPanel();
         p.setLayout(new MigLayout());
         p.add(newSensorName);
@@ -67,7 +68,7 @@ public class SensorPanel extends JPanel {
      * will display in the order that they are created.
      * @param p The Panel to populate with the current list of sensors
      */
-    private void updateSensorList(JPanel p) {
+    private void updateSensorList (JPanel p) {
         p.removeAll();
         securityService.getSensors().stream().sorted().forEach(s -> {
             JLabel sensorLabel = new JLabel(String.format("%s(%s): %s", s.getName(),  s.getSensorType().toString(),(s.getActive() ? "Active" : "Inactive")));
@@ -82,7 +83,6 @@ public class SensorPanel extends JPanel {
             p.add(sensorToggleButton, "width 100:100:100");
             p.add(sensorRemoveButton, "wrap");
         });
-
         repaint();
         revalidate();
     }
@@ -92,7 +92,7 @@ public class SensorPanel extends JPanel {
      * @param sensor The sensor to update
      * @param isActive The sensor's activation status
      */
-    private void setSensorActivity(Sensor sensor, Boolean isActive) {
+    private void setSensorActivity (Sensor sensor, Boolean isActive) {
         securityService.changeSensorActivationStatus(sensor, isActive);
         updateSensorList(sensorListPanel);
     }
@@ -101,8 +101,8 @@ public class SensorPanel extends JPanel {
      * Adds a sensor to the securityService and then rebuilds the sensor list
      * @param sensor The sensor to add
      */
-    private void addSensor(Sensor sensor) {
-        if(securityService.getSensors().size() < 4) {
+    private void addSensor (Sensor sensor) {
+        if (securityService.getSensors().size() < 4) {
             securityService.addSensor(sensor);
             updateSensorList(sensorListPanel);
         } else {
@@ -114,8 +114,23 @@ public class SensorPanel extends JPanel {
      * Remove a sensor from the securityService and then rebuild the sensor list
      * @param sensor The sensor to remove
      */
-    private void removeSensor(Sensor sensor) {
+    private void removeSensor (Sensor sensor) {
         securityService.removeSensor(sensor);
+        updateSensorList(sensorListPanel);
+    }
+
+    @Override
+    public void notify (AlarmStatus status) {
+        // no behavior necessary
+    }
+
+    @Override
+    public void catDetected (boolean catDetected) {
+        // no behavior necessary
+    }
+
+    @Override
+    public void sensorStatusChanged () {
         updateSensorList(sensorListPanel);
     }
 }

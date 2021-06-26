@@ -15,7 +15,7 @@ public class DisplayPanel extends JPanel implements StatusListener {
 
     private JLabel currentStatusLabel;
 
-    public DisplayPanel(SecurityService securityService) {
+    public DisplayPanel (SecurityService securityService) {
         super();
         setLayout(new MigLayout());
 
@@ -32,7 +32,6 @@ public class DisplayPanel extends JPanel implements StatusListener {
         add(panelLabel, "span 2, wrap");
         add(systemStatusLabel);
         add(currentStatusLabel, "wrap");
-
     }
 
     @Override

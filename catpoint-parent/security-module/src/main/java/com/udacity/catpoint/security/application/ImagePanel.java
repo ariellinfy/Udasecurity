@@ -25,7 +25,7 @@ public class ImagePanel extends JPanel implements StatusListener {
     private int IMAGE_WIDTH = 300;
     private int IMAGE_HEIGHT = 225;
 
-    public ImagePanel(SecurityService securityService) {
+    public ImagePanel (SecurityService securityService) {
         super();
         setLayout(new MigLayout());
         this.securityService = securityService;
@@ -72,12 +72,12 @@ public class ImagePanel extends JPanel implements StatusListener {
     }
 
     @Override
-    public void notify(AlarmStatus status) {
+    public void notify (AlarmStatus status) {
         //no behavior necessary
     }
 
     @Override
-    public void catDetected(boolean catDetected) {
+    public void catDetected (boolean catDetected) {
         if (catDetected) {
             cameraHeader.setText("DANGER - CAT DETECTED");
         } else {
@@ -86,7 +86,7 @@ public class ImagePanel extends JPanel implements StatusListener {
     }
 
     @Override
-    public void sensorStatusChanged() {
+    public void sensorStatusChanged () {
         //no behavior necessary
     }
 }

@@ -18,8 +18,7 @@ public class ControlPanel extends JPanel {
     private SecurityService securityService;
     private Map<ArmingStatus, JButton> buttonMap;
 
-
-    public ControlPanel(SecurityService securityService) {
+    public ControlPanel (SecurityService securityService) {
         super();
         setLayout(new MigLayout());
         this.securityService = securityService;
@@ -46,7 +45,5 @@ public class ControlPanel extends JPanel {
 
         ArmingStatus currentStatus = securityService.getArmingStatus();
         buttonMap.get(currentStatus).setBackground(currentStatus.getColor());
-
-
     }
 }

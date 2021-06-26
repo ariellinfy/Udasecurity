@@ -24,11 +24,11 @@ public class CatpointGui extends JFrame {
     private SensorPanel sensorPanel = new SensorPanel(securityService);
     private ImagePanel imagePanel = new ImagePanel(securityService);
 
-    public CatpointGui() {
+    public CatpointGui () {
         setLocation(100, 100);
         setSize(600, 850);
         setTitle("Very Secure App");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new MigLayout());
@@ -38,6 +38,5 @@ public class CatpointGui extends JFrame {
         mainPanel.add(sensorPanel);
 
         getContentPane().add(mainPanel);
-
     }
 }
